@@ -38,3 +38,4 @@ lcov.info
 # Misc
 *.pem
 .vercel
+.env*.local

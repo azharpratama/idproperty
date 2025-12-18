@@ -165,12 +165,12 @@ export function useForceTransfer() {
     error: confirmError
   } = useWaitForTransactionReceipt({ hash });
 
-  const forceTransfer = (from: `0x${string}`, to: `0x${string}`, amount: bigint) => {
+  const forceTransfer = (from: `0x${string}`, to: `0x${string}`, amount: bigint, reason: string) => {
     writeContract({
       address: PROPERTY_TOKEN_ADDRESS,
       abi: PROPERTY_TOKEN_ABI,
       functionName: 'forceTransfer',
-      args: [from, to, amount],
+      args: [from, to, amount, reason],
     });
   };
 

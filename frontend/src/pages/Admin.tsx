@@ -168,6 +168,7 @@ export function Admin() {
     from: '',
     to: '',
     amount: '',
+    reason: '',
   });
 
   const [legalDocument, setLegalDocument] = useState('');
@@ -233,7 +234,7 @@ export function Admin() {
   useEffect(() => {
     if (forceTransfer.isSuccess) {
       toast.success('Force transfer completed!');
-      setForceTransferForm({ from: '', to: '', amount: '' });
+      setForceTransferForm({ from: '', to: '', amount: '', reason: '' });
     }
   }, [forceTransfer.isSuccess]);
 
@@ -386,11 +387,16 @@ export function Admin() {
       toast.error('Please enter a valid amount');
       return;
     }
+    if (!forceTransferForm.reason.trim()) {
+      toast.error('Please enter a reason for force transfer');
+      return;
+    }
     forceTransfer.reset();
     forceTransfer.forceTransfer(
       forceTransferForm.from as `0x${string}`,
       forceTransferForm.to as `0x${string}`,
-      parseUnits(forceTransferForm.amount, 18)
+      parseUnits(forceTransferForm.amount, 18),
+      forceTransferForm.reason
     );
   };
 
@@ -486,11 +492,10 @@ export function Admin() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
-                activeTab === tab.id
-                  ? 'border-purple-500 text-purple-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-700'
-              }`}
+              className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors ${activeTab === tab.id
+                ? 'border-purple-500 text-purple-600'
+                : 'border-transparent text-gray-500 hover:text-gray-700'
+                }`}
             >
               <Icon className="h-4 w-4" />
               {tab.label}
@@ -583,8 +588,8 @@ export function Admin() {
                   {registerInvestor.isPending
                     ? 'Confirm in Wallet...'
                     : registerInvestor.isConfirming
-                    ? 'Registering...'
-                    : 'Register Investor'}
+                      ? 'Registering...'
+                      : 'Register Investor'}
                 </Button>
               </form>
             </CardBody>
@@ -651,8 +656,8 @@ export function Admin() {
                     {updateInvestor.isPending
                       ? 'Confirm...'
                       : updateInvestor.isConfirming
-                      ? 'Updating...'
-                      : 'Update Level'}
+                        ? 'Updating...'
+                        : 'Update Level'}
                   </Button>
                   <Button
                     type="button"
@@ -666,8 +671,8 @@ export function Admin() {
                     {revokeInvestor.isPending
                       ? 'Confirm...'
                       : revokeInvestor.isConfirming
-                      ? 'Revoking...'
-                      : 'Revoke'}
+                        ? 'Revoking...'
+                        : 'Revoke'}
                   </Button>
                 </div>
               </form>
@@ -733,8 +738,8 @@ export function Admin() {
                   {setInvestmentLimits.isPending
                     ? 'Confirm in Wallet...'
                     : setInvestmentLimits.isConfirming
-                    ? 'Updating...'
-                    : 'Update Limits'}
+                      ? 'Updating...'
+                      : 'Update Limits'}
                 </Button>
               </form>
             </CardBody>
@@ -776,8 +781,8 @@ export function Admin() {
                   {setLegalDoc.isPending
                     ? 'Confirm in Wallet...'
                     : setLegalDoc.isConfirming
-                    ? 'Updating...'
-                    : 'Update Document'}
+                      ? 'Updating...'
+                      : 'Update Document'}
                 </Button>
               </form>
             </CardBody>
@@ -832,6 +837,16 @@ export function Admin() {
                     disabled={isForceTransferBusy}
                   />
                 </div>
+                <Input
+                  label="Reason"
+                  placeholder="e.g., Court order #12345"
+                  value={forceTransferForm.reason}
+                  onChange={(e) =>
+                    setForceTransferForm({ ...forceTransferForm, reason: e.target.value })
+                  }
+                  helperText="Required: Legal justification for the force transfer"
+                  disabled={isForceTransferBusy}
+                />
                 <p className="text-sm text-gray-500">
                   Force transfer bypasses KYC and freeze checks. Use only for court orders,
                   estate settlement, or recovery purposes.
@@ -845,8 +860,8 @@ export function Admin() {
                   {forceTransfer.isPending
                     ? 'Confirm in Wallet...'
                     : forceTransfer.isConfirming
-                    ? 'Executing...'
-                    : 'Execute Force Transfer'}
+                      ? 'Executing...'
+                      : 'Execute Force Transfer'}
                 </Button>
               </form>
             </CardBody>
@@ -900,8 +915,8 @@ export function Admin() {
                   {freezeAccount.isPending
                     ? 'Confirm in Wallet...'
                     : freezeAccount.isConfirming
-                    ? 'Freezing...'
-                    : 'Freeze Account'}
+                      ? 'Freezing...'
+                      : 'Freeze Account'}
                 </Button>
               </form>
             </CardBody>
@@ -943,8 +958,8 @@ export function Admin() {
                   {unfreezeAccount.isPending
                     ? 'Confirm in Wallet...'
                     : unfreezeAccount.isConfirming
-                    ? 'Unfreezing...'
-                    : 'Unfreeze Account'}
+                      ? 'Unfreezing...'
+                      : 'Unfreeze Account'}
                 </Button>
               </form>
             </CardBody>
