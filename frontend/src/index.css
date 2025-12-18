@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary-pink: #F2A9DD;
+  --color-primary-purple: #C8B2F5;
+  --color-light-cream: #F7FAE4;
+  --color-success: #22C55E;
+  --color-warning: #F97316;
+  --color-danger: #EF4444;
+  --color-info: #3B82F6;
+}
+
+body {
+  @apply bg-gray-50 text-gray-900 antialiased;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.gradient-primary {
+  background: linear-gradient(135deg, #F2A9DD 0%, #C8B2F5 50%, #F7FAE4 100%);
+}
+
+.gradient-primary-hover {
+  background: linear-gradient(135deg, #E899CD 0%, #B8A2E5 50%, #E7EAD4 100%);
+}
+
+.btn-primary {
+  @apply px-4 py-2 rounded-lg font-medium text-white transition-all duration-200;
+  background: linear-gradient(135deg, #F2A9DD 0%, #C8B2F5 100%);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #E899CD 0%, #B8A2E5 100%);
+  @apply shadow-lg;
+}
+
+.btn-primary:disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+.card {
+  @apply bg-white rounded-xl shadow-sm border border-gray-100;
+}
+
+.card-hover {
+  @apply transition-all duration-200 hover:shadow-md hover:border-gray-200;
+}

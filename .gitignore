@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build outputs
+dist/
+out/
+build/
+cache/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Foundry
+contract/cache/
+contract/out/
+contract/broadcast/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+*.log
+npm-debug.log*
+
+# Testing
+coverage/
+coverage.json
+lcov.info
+
+# Misc
+*.pem
+.vercel
